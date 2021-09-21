@@ -1,0 +1,684 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EscuelaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alumno_materia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_alumno" Type="int" />
+          <Property Name="id_periodo" Type="int" />
+          <Property Name="id_clase" Type="int" />
+          <Property Name="calificacion" Type="float" />
+        </EntityType>
+        <EntityType Name="Alumnos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre1" Type="nvarchar" MaxLength="50" />
+          <Property Name="nombre2" Type="nvarchar" MaxLength="50" />
+          <Property Name="apellido1" Type="nvarchar" MaxLength="50" />
+          <Property Name="apellido2" Type="nvarchar" MaxLength="50" />
+          <Property Name="fecha_nacimiento" Type="date" />
+        </EntityType>
+        <EntityType Name="Clases">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_materia" Type="int" />
+          <Property Name="id_maestro" Type="int" />
+          <Property Name="id_periodo" Type="int" />
+          <Property Name="capacidad" Type="int" />
+        </EntityType>
+        <EntityType Name="Dias">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_dia" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Estados_usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estado_user" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Horarios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_dia" Type="int" />
+          <Property Name="id_clase" Type="int" />
+          <Property Name="hora_inicio" Type="time" Precision="7" />
+          <Property Name="hora_fin" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="Maestros">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="apellido1" Type="nvarchar" MaxLength="50" />
+          <Property Name="apellido2" Type="nvarchar" MaxLength="50" />
+          <Property Name="fecha_nacimiento" Type="date" />
+        </EntityType>
+        <EntityType Name="Materias">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Periodos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="fecha_inicio" Type="date" />
+          <Property Name="fecha_fin" Type="date" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+          <Property Name="password" Type="nvarchar" MaxLength="250" />
+          <Property Name="id_estado" Type="int" />
+        </EntityType>
+        <Association Name="FK_Alumno_materia_Alumnos">
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="0..1" />
+          <End Role="Alumno_materia" Type="Self.Alumno_materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumnos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumno_materia">
+              <PropertyRef Name="id_alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Alumno_materia_Clases">
+          <End Role="Clases" Type="Self.Clases" Multiplicity="0..1" />
+          <End Role="Alumno_materia" Type="Self.Alumno_materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clases">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumno_materia">
+              <PropertyRef Name="id_clase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Alumno_materia_Periodos">
+          <End Role="Periodos" Type="Self.Periodos" Multiplicity="0..1" />
+          <End Role="Alumno_materia" Type="Self.Alumno_materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periodos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumno_materia">
+              <PropertyRef Name="id_periodo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clases_Maestros">
+          <End Role="Maestros" Type="Self.Maestros" Multiplicity="0..1" />
+          <End Role="Clases" Type="Self.Clases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maestros">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Clases">
+              <PropertyRef Name="id_maestro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clases_Materias">
+          <End Role="Materias" Type="Self.Materias" Multiplicity="0..1" />
+          <End Role="Clases" Type="Self.Clases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Clases">
+              <PropertyRef Name="id_materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clases_Periodos">
+          <End Role="Periodos" Type="Self.Periodos" Multiplicity="0..1" />
+          <End Role="Clases" Type="Self.Clases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periodos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Clases">
+              <PropertyRef Name="id_periodo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Horarios_Clases">
+          <End Role="Clases" Type="Self.Clases" Multiplicity="0..1" />
+          <End Role="Horarios" Type="Self.Horarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clases">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Horarios">
+              <PropertyRef Name="id_clase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Horarios_Dias">
+          <End Role="Dias" Type="Self.Dias" Multiplicity="0..1" />
+          <End Role="Horarios" Type="Self.Horarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dias">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Horarios">
+              <PropertyRef Name="id_dia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Estados_usuario">
+          <End Role="Estados_usuario" Type="Self.Estados_usuario" Multiplicity="0..1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados_usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EscuelaModelStoreContainer">
+          <EntitySet Name="Alumno_materia" EntityType="Self.Alumno_materia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Alumnos" EntityType="Self.Alumnos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clases" EntityType="Self.Clases" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dias" EntityType="Self.Dias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estados_usuario" EntityType="Self.Estados_usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Horarios" EntityType="Self.Horarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Maestros" EntityType="Self.Maestros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materias" EntityType="Self.Materias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Periodos" EntityType="Self.Periodos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Alumno_materia_Alumnos" Association="Self.FK_Alumno_materia_Alumnos">
+            <End Role="Alumnos" EntitySet="Alumnos" />
+            <End Role="Alumno_materia" EntitySet="Alumno_materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Alumno_materia_Clases" Association="Self.FK_Alumno_materia_Clases">
+            <End Role="Clases" EntitySet="Clases" />
+            <End Role="Alumno_materia" EntitySet="Alumno_materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Alumno_materia_Periodos" Association="Self.FK_Alumno_materia_Periodos">
+            <End Role="Periodos" EntitySet="Periodos" />
+            <End Role="Alumno_materia" EntitySet="Alumno_materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clases_Maestros" Association="Self.FK_Clases_Maestros">
+            <End Role="Maestros" EntitySet="Maestros" />
+            <End Role="Clases" EntitySet="Clases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clases_Materias" Association="Self.FK_Clases_Materias">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="Clases" EntitySet="Clases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clases_Periodos" Association="Self.FK_Clases_Periodos">
+            <End Role="Periodos" EntitySet="Periodos" />
+            <End Role="Clases" EntitySet="Clases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Horarios_Clases" Association="Self.FK_Horarios_Clases">
+            <End Role="Clases" EntitySet="Clases" />
+            <End Role="Horarios" EntitySet="Horarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Horarios_Dias" Association="Self.FK_Horarios_Dias">
+            <End Role="Dias" EntitySet="Dias" />
+            <End Role="Horarios" EntitySet="Horarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Estados_usuario" Association="Self.FK_Usuarios_Estados_usuario">
+            <End Role="Estados_usuario" EntitySet="Estados_usuario" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EscuelaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alumno_materia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_alumno" Type="Int32" />
+          <Property Name="id_periodo" Type="Int32" />
+          <Property Name="id_clase" Type="Int32" />
+          <Property Name="calificacion" Type="Double" />
+          <NavigationProperty Name="Alumnos" Relationship="Self.FK_Alumno_materia_Alumnos" FromRole="Alumno_materia" ToRole="Alumnos" />
+          <NavigationProperty Name="Clases" Relationship="Self.FK_Alumno_materia_Clases" FromRole="Alumno_materia" ToRole="Clases" />
+          <NavigationProperty Name="Periodos" Relationship="Self.FK_Alumno_materia_Periodos" FromRole="Alumno_materia" ToRole="Periodos" />
+        </EntityType>
+        <EntityType Name="Alumnos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="nombre2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="apellido1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="apellido2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Alumno_materia" Relationship="Self.FK_Alumno_materia_Alumnos" FromRole="Alumnos" ToRole="Alumno_materia" />
+        </EntityType>
+        <EntityType Name="Clases">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_materia" Type="Int32" />
+          <Property Name="id_maestro" Type="Int32" />
+          <Property Name="id_periodo" Type="Int32" />
+          <Property Name="capacidad" Type="Int32" />
+          <NavigationProperty Name="Alumno_materia" Relationship="Self.FK_Alumno_materia_Clases" FromRole="Clases" ToRole="Alumno_materia" />
+          <NavigationProperty Name="Maestros" Relationship="Self.FK_Clases_Maestros" FromRole="Clases" ToRole="Maestros" />
+          <NavigationProperty Name="Materias" Relationship="Self.FK_Clases_Materias" FromRole="Clases" ToRole="Materias" />
+          <NavigationProperty Name="Periodos" Relationship="Self.FK_Clases_Periodos" FromRole="Clases" ToRole="Periodos" />
+          <NavigationProperty Name="Horarios" Relationship="Self.FK_Horarios_Clases" FromRole="Clases" ToRole="Horarios" />
+        </EntityType>
+        <EntityType Name="Dias">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_dia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Horarios" Relationship="Self.FK_Horarios_Dias" FromRole="Dias" ToRole="Horarios" />
+        </EntityType>
+        <EntityType Name="Estados_usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estado_user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Usuarios" Relationship="EscuelaModel.FK_Usuarios_Estados_usuario" FromRole="Estados_usuario" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Horarios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_dia" Type="Int32" />
+          <Property Name="id_clase" Type="Int32" />
+          <Property Name="hora_inicio" Type="Time" Precision="7" />
+          <Property Name="hora_fin" Type="Time" Precision="7" />
+          <NavigationProperty Name="Clases" Relationship="Self.FK_Horarios_Clases" FromRole="Horarios" ToRole="Clases" />
+          <NavigationProperty Name="Dias" Relationship="Self.FK_Horarios_Dias" FromRole="Horarios" ToRole="Dias" />
+        </EntityType>
+        <EntityType Name="Maestros">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="apellido1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="apellido2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Clases" Relationship="Self.FK_Clases_Maestros" FromRole="Maestros" ToRole="Clases" />
+        </EntityType>
+        <EntityType Name="Materias">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Clases" Relationship="Self.FK_Clases_Materias" FromRole="Materias" ToRole="Clases" />
+        </EntityType>
+        <EntityType Name="Periodos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_inicio" Type="DateTime" Precision="0" />
+          <Property Name="fecha_fin" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Alumno_materia" Relationship="Self.FK_Alumno_materia_Periodos" FromRole="Periodos" ToRole="Alumno_materia" />
+          <NavigationProperty Name="Clases" Relationship="Self.FK_Clases_Periodos" FromRole="Periodos" ToRole="Clases" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Alumno_materia_Alumnos">
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="0..1" />
+          <End Role="Alumno_materia" Type="Self.Alumno_materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumnos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumno_materia">
+              <PropertyRef Name="id_alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Alumno_materia_Clases">
+          <End Role="Clases" Type="Self.Clases" Multiplicity="0..1" />
+          <End Role="Alumno_materia" Type="Self.Alumno_materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clases">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumno_materia">
+              <PropertyRef Name="id_clase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Alumno_materia_Periodos">
+          <End Role="Periodos" Type="Self.Periodos" Multiplicity="0..1" />
+          <End Role="Alumno_materia" Type="Self.Alumno_materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periodos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumno_materia">
+              <PropertyRef Name="id_periodo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clases_Maestros">
+          <End Role="Maestros" Type="Self.Maestros" Multiplicity="0..1" />
+          <End Role="Clases" Type="Self.Clases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maestros">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Clases">
+              <PropertyRef Name="id_maestro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clases_Materias">
+          <End Role="Materias" Type="Self.Materias" Multiplicity="0..1" />
+          <End Role="Clases" Type="Self.Clases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Clases">
+              <PropertyRef Name="id_materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clases_Periodos">
+          <End Role="Periodos" Type="Self.Periodos" Multiplicity="0..1" />
+          <End Role="Clases" Type="Self.Clases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periodos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Clases">
+              <PropertyRef Name="id_periodo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Horarios_Clases">
+          <End Role="Clases" Type="Self.Clases" Multiplicity="0..1" />
+          <End Role="Horarios" Type="Self.Horarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clases">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Horarios">
+              <PropertyRef Name="id_clase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Horarios_Dias">
+          <End Role="Dias" Type="Self.Dias" Multiplicity="0..1" />
+          <End Role="Horarios" Type="Self.Horarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dias">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Horarios">
+              <PropertyRef Name="id_dia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EscuelaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alumno_materia" EntityType="Self.Alumno_materia" />
+          <EntitySet Name="Alumnos" EntityType="Self.Alumnos" />
+          <EntitySet Name="Clases" EntityType="Self.Clases" />
+          <EntitySet Name="Dias" EntityType="Self.Dias" />
+          <EntitySet Name="Estados_usuario" EntityType="Self.Estados_usuario" />
+          <EntitySet Name="Horarios" EntityType="Self.Horarios" />
+          <EntitySet Name="Maestros" EntityType="Self.Maestros" />
+          <EntitySet Name="Materias" EntityType="Self.Materias" />
+          <EntitySet Name="Periodos" EntityType="Self.Periodos" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_Alumno_materia_Alumnos" Association="Self.FK_Alumno_materia_Alumnos">
+            <End Role="Alumnos" EntitySet="Alumnos" />
+            <End Role="Alumno_materia" EntitySet="Alumno_materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Alumno_materia_Clases" Association="Self.FK_Alumno_materia_Clases">
+            <End Role="Clases" EntitySet="Clases" />
+            <End Role="Alumno_materia" EntitySet="Alumno_materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Alumno_materia_Periodos" Association="Self.FK_Alumno_materia_Periodos">
+            <End Role="Periodos" EntitySet="Periodos" />
+            <End Role="Alumno_materia" EntitySet="Alumno_materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clases_Maestros" Association="Self.FK_Clases_Maestros">
+            <End Role="Maestros" EntitySet="Maestros" />
+            <End Role="Clases" EntitySet="Clases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clases_Materias" Association="Self.FK_Clases_Materias">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="Clases" EntitySet="Clases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clases_Periodos" Association="Self.FK_Clases_Periodos">
+            <End Role="Periodos" EntitySet="Periodos" />
+            <End Role="Clases" EntitySet="Clases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Horarios_Clases" Association="Self.FK_Horarios_Clases">
+            <End Role="Clases" EntitySet="Clases" />
+            <End Role="Horarios" EntitySet="Horarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Horarios_Dias" Association="Self.FK_Horarios_Dias">
+            <End Role="Dias" EntitySet="Dias" />
+            <End Role="Horarios" EntitySet="Horarios" />
+          </AssociationSet>
+          <EntitySet Name="Usuarios" EntityType="EscuelaModel.Usuarios" />
+          <AssociationSet Name="FK_Usuarios_Estados_usuario" Association="EscuelaModel.FK_Usuarios_Estados_usuario">
+            <End Role="Estados_usuario" EntitySet="Estados_usuario" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="Estados_usuario" Relationship="EscuelaModel.FK_Usuarios_Estados_usuario" FromRole="Usuarios" ToRole="Estados_usuario" />
+        </EntityType>
+        <Association Name="FK_Usuarios_Estados_usuario">
+          <End Type="EscuelaModel.Estados_usuario" Role="Estados_usuario" Multiplicity="0..1" />
+          <End Type="EscuelaModel.Usuarios" Role="Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados_usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EscuelaModelStoreContainer" CdmEntityContainer="EscuelaEntities">
+          <EntitySetMapping Name="Alumno_materia">
+            <EntityTypeMapping TypeName="EscuelaModel.Alumno_materia">
+              <MappingFragment StoreEntitySet="Alumno_materia">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_alumno" ColumnName="id_alumno" />
+                <ScalarProperty Name="id_periodo" ColumnName="id_periodo" />
+                <ScalarProperty Name="id_clase" ColumnName="id_clase" />
+                <ScalarProperty Name="calificacion" ColumnName="calificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alumnos">
+            <EntityTypeMapping TypeName="EscuelaModel.Alumnos">
+              <MappingFragment StoreEntitySet="Alumnos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre1" ColumnName="nombre1" />
+                <ScalarProperty Name="nombre2" ColumnName="nombre2" />
+                <ScalarProperty Name="apellido1" ColumnName="apellido1" />
+                <ScalarProperty Name="apellido2" ColumnName="apellido2" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clases">
+            <EntityTypeMapping TypeName="EscuelaModel.Clases">
+              <MappingFragment StoreEntitySet="Clases">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_materia" ColumnName="id_materia" />
+                <ScalarProperty Name="id_maestro" ColumnName="id_maestro" />
+                <ScalarProperty Name="id_periodo" ColumnName="id_periodo" />
+                <ScalarProperty Name="capacidad" ColumnName="capacidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dias">
+            <EntityTypeMapping TypeName="EscuelaModel.Dias">
+              <MappingFragment StoreEntitySet="Dias">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre_dia" ColumnName="nombre_dia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estados_usuario">
+            <EntityTypeMapping TypeName="EscuelaModel.Estados_usuario">
+              <MappingFragment StoreEntitySet="Estados_usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="estado_user" ColumnName="estado_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Horarios">
+            <EntityTypeMapping TypeName="EscuelaModel.Horarios">
+              <MappingFragment StoreEntitySet="Horarios">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_dia" ColumnName="id_dia" />
+                <ScalarProperty Name="id_clase" ColumnName="id_clase" />
+                <ScalarProperty Name="hora_inicio" ColumnName="hora_inicio" />
+                <ScalarProperty Name="hora_fin" ColumnName="hora_fin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maestros">
+            <EntityTypeMapping TypeName="EscuelaModel.Maestros">
+              <MappingFragment StoreEntitySet="Maestros">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido1" ColumnName="apellido1" />
+                <ScalarProperty Name="apellido2" ColumnName="apellido2" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materias">
+            <EntityTypeMapping TypeName="EscuelaModel.Materias">
+              <MappingFragment StoreEntitySet="Materias">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Periodos">
+            <EntityTypeMapping TypeName="EscuelaModel.Periodos">
+              <MappingFragment StoreEntitySet="Periodos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+                <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="EscuelaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="EscuelaModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
